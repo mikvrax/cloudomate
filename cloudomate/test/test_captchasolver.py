@@ -1,9 +1,18 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 import unittest
 import time
 import os
 
+from future import standard_library
+from mock.mock import patch, MagicMock
+
 from cloudomate.util.captchasolver import CaptchaSolver, ReCaptchaSolver
-from mock import patch, MagicMock
+
+standard_library.install_aliases()
 
 
 class TestCaptchaSolver(unittest.TestCase):
@@ -23,7 +32,8 @@ class TestCaptchaSolver(unittest.TestCase):
         self.captcha_solver._get_task_result = MagicMock()
          
         
-        self.captcha_solver.solve_captcha_text_case_sensitive(os.path.join(os.path.dirname(__file__),"resources/captcha.png"))
+        self.captcha_solver.solve_captcha_text_case_sensitive(os.path.join(
+                            os.path.dirname(__file__),"resources/captcha.png"))
 
         self.assertTrue(self.captcha_solver._create_task_captcha_text_case_sensitive.called)
         self.assertTrue(self.captcha_solver._get_task_status.called)
